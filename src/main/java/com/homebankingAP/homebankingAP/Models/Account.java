@@ -1,5 +1,6 @@
 package com.homebankingAP.homebankingAP.Models;
 
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
