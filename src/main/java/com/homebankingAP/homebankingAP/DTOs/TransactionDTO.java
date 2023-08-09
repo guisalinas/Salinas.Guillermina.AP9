@@ -1,37 +1,29 @@
-package com.homebankingAP.homebankingAP.Models;
+package com.homebankingAP.homebankingAP.DTOs;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.hibernate.annotations.GenericGenerator;
+import com.homebankingAP.homebankingAP.Models.Transaction;
+import com.homebankingAP.homebankingAP.Models.TransactionType;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-public class Transaction {
+public class TransactionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private TransactionType type;
     private double amount;
     private String description;
     private LocalDate date = LocalDate.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name= "account_id")
-    private Account account;
 
-    public Transaction(){}
-
-    public Transaction(TransactionType type, double amount, String description) {
-        this.type = type;
-        this.amount = amount;
-        this.description = description;
+    public TransactionDTO(Transaction transaction){
+        this.id = transaction.getId();
+        this.type = transaction.getType();
+        this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
+        //this.date = transaction.getDate();
     }
 
-   //getters
 
+    //getters
     public Long getId() {
         return id;
     }
@@ -52,11 +44,8 @@ public class Transaction {
         return date;
     }
 
-    public Account getAccount() {
-        return account;
-    }
 
-    //setters
+    // setters
 
     public void setType(TransactionType type) {
         this.type = type;
@@ -74,7 +63,4 @@ public class Transaction {
         this.date = date;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

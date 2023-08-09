@@ -46,7 +46,6 @@ public class Client {
         return email;
     }
 
-
     public Set<Account> getAccounts() {
         return accounts;
     }

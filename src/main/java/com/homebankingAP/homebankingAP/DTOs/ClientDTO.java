@@ -49,9 +49,7 @@ public class ClientDTO {
         this.email = email;
     }
 
-    //Accaunt methods
-
-
+    //Account methods
     public Set<AccountDTO> getAccounts() {
         return accounts;
     }

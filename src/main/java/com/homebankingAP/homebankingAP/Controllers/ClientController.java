@@ -32,6 +32,7 @@ public class ClientController {
 
     @RequestMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
+
         return new ClientDTO( C_repository.findById(id).orElse(null));
     }
 

@@ -56,6 +56,10 @@ public class Account {
         return client;
     }
 
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
     //setters
 
     public void setNumber(String number) {
@@ -81,7 +85,13 @@ public class Account {
     //Other Methods
 
     public void addTransaction(Transaction transaction) {
+        //System.out.println("--> entre al addTransaction!");
         transaction.setAccount(this);
         transactions.add(transaction);
+        //System.out.println("mi balance antes:" + this.balance);
+        this.balance += transaction.getAmount();
+        //System.out.println("mi balance despues:" + this.balance);
     }
+
+
 }
