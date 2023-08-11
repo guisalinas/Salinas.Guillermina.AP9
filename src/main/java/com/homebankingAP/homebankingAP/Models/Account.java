@@ -82,15 +82,13 @@ public class Account {
         this.transactions = transactions;
     }
 
-    //Other Methods
 
+    //Other Methods
     public void addTransaction(Transaction transaction) {
-        //System.out.println("--> entre al addTransaction!");
         transaction.setAccount(this);
         transactions.add(transaction);
-        //System.out.println("mi balance antes:" + this.balance);
+        //Balance update:
         this.balance += transaction.getAmount();
-        //System.out.println("mi balance despues:" + this.balance);
     }
 
 

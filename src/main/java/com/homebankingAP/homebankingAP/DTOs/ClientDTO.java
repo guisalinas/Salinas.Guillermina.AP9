@@ -21,6 +21,7 @@ public class ClientDTO {
         this.accounts = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toSet());
     }
 
+    //getters
     public Long getId() {
         return id;
     }
@@ -28,30 +29,25 @@ public class ClientDTO {
     public String getFirstName() {
         return firstName;
     }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getEmail() {
         return email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    //Account methods
     public Set<AccountDTO> getAccounts() {
         return accounts;
+    }
+
+    //setters
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public void setAccounts(Set<AccountDTO> accounts) {
         this.accounts = accounts;

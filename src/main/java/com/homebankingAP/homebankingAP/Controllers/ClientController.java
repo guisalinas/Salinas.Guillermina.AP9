@@ -23,12 +23,7 @@ public class ClientController {
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
         return C_repository.findAll().stream().map(ClientDTO::new).collect(toList());
-                /*.findAll()
-                .stream()
-                .map(client -> new ClientDTO(client))
-                .collect(toList());*/
     }
-
 
     @RequestMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){

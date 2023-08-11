@@ -1,11 +1,9 @@
 package com.homebankingAP.homebankingAP;
 
-import com.homebankingAP.homebankingAP.Models.Account;
-import com.homebankingAP.homebankingAP.Models.Client;
-import com.homebankingAP.homebankingAP.Models.Transaction;
-import com.homebankingAP.homebankingAP.Models.TransactionType;
+import com.homebankingAP.homebankingAP.Models.*;
 import com.homebankingAP.homebankingAP.Repositories.AccountRepository;
 import com.homebankingAP.homebankingAP.Repositories.ClientRepository;
+import com.homebankingAP.homebankingAP.Repositories.LoanRepository;
 import com.homebankingAP.homebankingAP.Repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApApplication {
@@ -24,7 +22,7 @@ public class HomebankingApApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository C_repository, AccountRepository A_repository, TransactionRepository T_repository){
+	public CommandLineRunner initData(ClientRepository C_repository, AccountRepository A_repository, TransactionRepository T_repository, LoanRepository L_repository){
 		return (args) ->{
 
 			//Client 1: Melba Morel
@@ -44,17 +42,19 @@ public class HomebankingApApplication {
 
 			//Transactions
 
-			//Transactions by Melba
+			//Melba Morel accounts transactions:
+
+			//Account 1 : VIN001
 			Transaction transaction1 = T_repository.save(new Transaction(TransactionType.CREDIT, 10000, "Wire transfer by HomeroJSimpson"));
 			Transaction transaction2 = T_repository.save(new Transaction(TransactionType.DEBIT, -1500, "MyStreaming Service"));
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);
 			T_repository.save(transaction1);
 			T_repository.save(transaction2);
-			//guardo el account para que se guarde el nuevo balance.
+			//I save the account so that the new balance is saved
 			A_repository.save(account1);
 
-
+			//Account 2 : VIN002
 			Transaction transaction3 = T_repository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by ElenaAlegria"));
 			Transaction transaction4 = T_repository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by NedFlanders"));
 			Transaction transaction5 = T_repository.save(new Transaction(TransactionType.DEBIT, -4000, "Krusty-Burger"));
@@ -65,8 +65,17 @@ public class HomebankingApApplication {
 			T_repository.save(transaction3);
 			T_repository.save(transaction4);
 			T_repository.save(transaction5);
+
 			A_repository.save(account2);
 
+			//Loans
+			Loan loan1 = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
+			Loan loan2 = new Loan("Personal", 100000, List.of(6, 12, 24));
+			Loan loan3 = new Loan("Automotriz", 500000, List.of(6, 12, 24, 36));
+
+			L_repository.save(loan1);
+			L_repository.save(loan2);
+			L_repository.save(loan3);
 		};
 	}
 

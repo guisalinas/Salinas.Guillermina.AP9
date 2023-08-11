@@ -13,15 +13,12 @@ public class TransactionDTO {
     private String description;
     private LocalDate date = LocalDate.now();
 
-
     public TransactionDTO(Transaction transaction){
         this.id = transaction.getId();
         this.type = transaction.getType();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
-        //this.date = transaction.getDate();
     }
-
 
     //getters
     public Long getId() {
@@ -46,7 +43,6 @@ public class TransactionDTO {
 
 
     // setters
-
     public void setType(TransactionType type) {
         this.type = type;
     }
