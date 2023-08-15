@@ -22,63 +22,76 @@ public class HomebankingApApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository C_repository, AccountRepository A_repository, TransactionRepository T_repository, LoanRepository L_repository){
+	public CommandLineRunner initData(ClientRepository _clientRepository, AccountRepository _accountRepository, TransactionRepository _transactionRepository, LoanRepository _loanRepository){
 		return (args) ->{
 
 			//Client 1: Melba Morel
-			Client client1 = C_repository.save(new Client("Melba", "Morel", "melba@mindhub.com"));
+			Client melbaClient = _clientRepository.save(new Client("Melba", "Morel", "melba@mindhub.com"));
 			Account account1 = new Account("VIN001", LocalDate.now(), 5000);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
-			client1.addAccount(account1);
-			client1.addAccount(account2);
-			A_repository.save(account1);
-			A_repository.save(account2);
+			melbaClient.addAccount(account1);
+			melbaClient.addAccount(account2);
+			_accountRepository.save(account1);
+			_accountRepository.save(account2);
 
 			//Client 2: Homero J Simpson
-			Client client2 = C_repository.save(new Client("Homero J", "Simpson", "HomeroJay@mindhub.com"));
+			Client homeroClient = _clientRepository.save(new Client("Homero J", "Simpson", "HomeroJay@mindhub.com"));
 			Account account3 = new Account("VIN003", LocalDate.now(), 3200);
-			client2.addAccount(account3);
-			A_repository.save(account3);
+			homeroClient.addAccount(account3);
+			_accountRepository.save(account3);
 
 			//Transactions
 
 			//Melba Morel accounts transactions:
 
 			//Account 1 : VIN001
-			Transaction transaction1 = T_repository.save(new Transaction(TransactionType.CREDIT, 10000, "Wire transfer by HomeroJSimpson"));
-			Transaction transaction2 = T_repository.save(new Transaction(TransactionType.DEBIT, -1500, "MyStreaming Service"));
+			Transaction transaction1 = _transactionRepository.save(new Transaction(TransactionType.CREDIT, 10000, "Wire transfer by HomeroJSimpson"));
+			Transaction transaction2 = _transactionRepository.save(new Transaction(TransactionType.DEBIT, -1500, "MyStreaming Service"));
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction2);
-			T_repository.save(transaction1);
-			T_repository.save(transaction2);
+			_transactionRepository.save(transaction1);
+			_transactionRepository.save(transaction2);
 			//I save the account so that the new balance is saved
-			A_repository.save(account1);
+			_accountRepository.save(account1);
 
 			//Account 2 : VIN002
-			Transaction transaction3 = T_repository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by ElenaAlegria"));
-			Transaction transaction4 = T_repository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by NedFlanders"));
-			Transaction transaction5 = T_repository.save(new Transaction(TransactionType.DEBIT, -4000, "Krusty-Burger"));
+			Transaction transaction3 = _transactionRepository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by ElenaAlegria"));
+			Transaction transaction4 = _transactionRepository.save(new Transaction(TransactionType.CREDIT, 3500, "Wire transfer by NedFlanders"));
+			Transaction transaction5 = _transactionRepository.save(new Transaction(TransactionType.DEBIT, -4000, "Krusty-Burger"));
 
 			account2.addTransaction(transaction3);
 			account2.addTransaction(transaction4);
 			account2.addTransaction(transaction5);
-			T_repository.save(transaction3);
-			T_repository.save(transaction4);
-			T_repository.save(transaction5);
+			_transactionRepository.save(transaction3);
+			_transactionRepository.save(transaction4);
+			_transactionRepository.save(transaction5);
 
-			A_repository.save(account2);
+			_accountRepository.save(account2);
 
 			//Loans
-			Loan loan1 = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
-			Loan loan2 = new Loan("Personal", 100000, List.of(6, 12, 24));
-			Loan loan3 = new Loan("Automotriz", 500000, List.of(6, 12, 24, 36));
+			Loan mortgageLoan = new Loan("Mortgage", 500000, List.of(12, 24, 36, 48, 60));
+			Loan personalLoan = new Loan("Personal", 100000, List.of(6, 12, 24));
+			Loan carLoan = new Loan("Car", 500000, List.of(6, 12, 24, 36));
 
-			L_repository.save(loan1);
-			L_repository.save(loan2);
-			L_repository.save(loan3);
+			_loanRepository.save(mortgageLoan);
+			_loanRepository.save(personalLoan);
+			_loanRepository.save(carLoan);
+
+			//Melba loans
+			ClientLoan melba_clientLoan1 = new ClientLoan(400000, 60, melbaClient, mortgageLoan);
+			ClientLoan melba_clientLoan2 = new ClientLoan(50000, 12, melbaClient, personalLoan);
+			melbaClient.addClientLoan(melba_clientLoan1);
+			melbaClient.addClientLoan(melba_clientLoan2);
+			_clientRepository.save(melbaClient);
+
+			//Homero loans
+			ClientLoan homero_clientLoan3 = new ClientLoan(100000, 24, homeroClient, personalLoan);
+			ClientLoan homero_clientLoan4 = new ClientLoan(200000, 36, homeroClient, carLoan);
+			homeroClient.addClientLoan(homero_clientLoan3);
+			homeroClient.addClientLoan(homero_clientLoan4);
+			_clientRepository.save(homeroClient);
 		};
 	}
-
 
 }
 

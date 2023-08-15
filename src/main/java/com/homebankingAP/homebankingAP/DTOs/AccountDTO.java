@@ -42,20 +42,17 @@ public class AccountDTO {
     public double getBalance() {
         return balance;
     }
+    public Set<TransactionDTO> getTransactions() {
+        return transactions;
+    }
 
     //setters
     public void setDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
-
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
-    public Set<TransactionDTO> getTransactions() {
-        return transactions;
-    }
-
     public void setTransactions(Set<TransactionDTO> transactions) {
         this.transactions = transactions;
     }
