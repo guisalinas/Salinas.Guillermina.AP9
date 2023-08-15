@@ -26,6 +26,9 @@ public class Client {
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ClientLoan> loans = new HashSet<>();
 
+    @OneToMany(mappedBy = "client", fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Card> cards = new HashSet<>();
+
     public Client(){
 
     }
@@ -58,6 +61,9 @@ public class Client {
     }
     public Set<ClientLoan> getClientLoans(){ return loans;}
 
+    public Set<Card> getCards() {
+        return cards;
+    }
 
     //Setters
     public void setFirstName(String firstName) {
@@ -79,7 +85,11 @@ public class Client {
     public void setLoans(Set<ClientLoan> clientLoans) {
         this.loans = clientLoans;
     }
-//other methods
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+    //other methods
 
     public void addAccount(Account account) {
         account.setClient(this);
@@ -91,7 +101,15 @@ public class Client {
         loans.add(clientLoan);
     }
 
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
+    }
     public List<Loan> getLoans() {
         return loans.stream().map(_loan -> _loan.getLoan()).collect(toList());
     }
+
+    @Override
+    public String toString(){ return this.firstName + " " + this.lastName ;}
+
 }
