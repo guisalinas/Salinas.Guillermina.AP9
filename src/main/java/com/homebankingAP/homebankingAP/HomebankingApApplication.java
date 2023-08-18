@@ -75,18 +75,24 @@ public class HomebankingApApplication {
 			_loanRepository.save(carLoan);
 
 			//Melba loans
-			ClientLoan melba_clientLoan1 = new ClientLoan(400000, 60, melbaClient, mortgageLoan);
-			ClientLoan melba_clientLoan2 = new ClientLoan(50000, 12, melbaClient, personalLoan);
+			ClientLoan melba_clientLoan1 = new ClientLoan(400000, 60);
+			ClientLoan melba_clientLoan2 = new ClientLoan(50000, 12);
 			melbaClient.addClientLoan(melba_clientLoan1);
+			mortgageLoan.addClientLoan(melba_clientLoan1);
 			melbaClient.addClientLoan(melba_clientLoan2);
+			personalLoan.addClientLoan(melba_clientLoan2);
 			_clientRepository.save(melbaClient);
 
+
 			//Homero loans
-			ClientLoan homero_clientLoan3 = new ClientLoan(100000, 24, homeroClient, personalLoan);
-			ClientLoan homero_clientLoan4 = new ClientLoan(200000, 36, homeroClient, carLoan);
+			ClientLoan homero_clientLoan3 = new ClientLoan(100000, 24);
+			ClientLoan homero_clientLoan4 = new ClientLoan(200000, 36);
 			homeroClient.addClientLoan(homero_clientLoan3);
+			personalLoan.addClientLoan(homero_clientLoan3);
 			homeroClient.addClientLoan(homero_clientLoan4);
+			carLoan.addClientLoan(homero_clientLoan4);
 			_clientRepository.save(homeroClient);
+
 
 			//Cards
 

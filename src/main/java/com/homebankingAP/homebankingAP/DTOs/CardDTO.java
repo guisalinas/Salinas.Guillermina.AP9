@@ -1,4 +1,4 @@
-package com.homebankingAP.homebankingAP.DTOs;
+package com.homebankingAP.homebankingAP.dtos;
 
 import com.homebankingAP.homebankingAP.Models.Card;
 import com.homebankingAP.homebankingAP.Models.CardColor;

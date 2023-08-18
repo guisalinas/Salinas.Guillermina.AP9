@@ -1,10 +1,9 @@
-package com.homebankingAP.homebankingAP.DTOs;
+package com.homebankingAP.homebankingAP.dtos;
 
 import com.homebankingAP.homebankingAP.Models.ClientLoan;
 
 public class ClientLoanDTO {
     private Long id;
-
     private Long loanId;
     private String name;
     private double amount;
