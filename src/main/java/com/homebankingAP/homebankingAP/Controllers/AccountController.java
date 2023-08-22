@@ -1,4 +1,4 @@
-package com.homebankingAP.homebankingAP.Controllers;
+package com.homebankingAP.homebankingAP.controllers;
 
 import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.Repositories.AccountRepository;
@@ -16,16 +16,16 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
 
     @Autowired
-    private AccountRepository A_repository;
+    private AccountRepository _accountRepository;
 
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-        return A_repository.findAll().stream().map(AccountDTO::new).collect(toList());
+        return _accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
 
     @RequestMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
-        return new AccountDTO(A_repository.findById(id).orElse(null));
+        return new AccountDTO(_accountRepository.findById(id).orElse(null));
     }
 
 

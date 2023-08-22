@@ -2,10 +2,12 @@ package com.homebankingAP.homebankingAP;
 
 import com.homebankingAP.homebankingAP.Models.*;
 import com.homebankingAP.homebankingAP.Repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,12 +20,16 @@ public class HomebankingApApplication {
 		SpringApplication.run(HomebankingApApplication.class, args);
 	}
 
+	//spring security:
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@Bean
 	public CommandLineRunner initData(ClientRepository _clientRepository, AccountRepository _accountRepository, TransactionRepository _transactionRepository, LoanRepository _loanRepository, CardRepository _cardRepository){
 		return (args) ->{
 
 			//Client 1: Melba Morel
-			Client melbaClient = _clientRepository.save(new Client("Melba", "Morel", "melba@mindhub.com"));
+			Client melbaClient = _clientRepository.save(new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba")));
 			Account account1 = new Account("VIN001", LocalDate.now(), 5000);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
 			melbaClient.addAccount(account1);
@@ -32,7 +38,7 @@ public class HomebankingApApplication {
 			_accountRepository.save(account2);
 
 			//Client 2: Homero J Simpson
-			Client homeroClient = _clientRepository.save(new Client("Homero J", "Simpson", "HomeroJay@mindhub.com"));
+			Client homeroClient = _clientRepository.save(new Client("Homero J", "Simpson", "homerojay@mindhub.com", passwordEncoder.encode("homero")));
 			Account account3 = new Account("VIN003", LocalDate.now(), 3200);
 			homeroClient.addAccount(account3);
 			_accountRepository.save(account3);
@@ -107,6 +113,9 @@ public class HomebankingApApplication {
 			Card homeroCard1 = new Card(homeroClient.toString(), CardType.CREDIT,CardColor.SILVER,"9532-6695-8311-4789" ,569, LocalDate.now().plusYears(5), LocalDate.now());
 			homeroClient.addCard(homeroCard1);
 			_clientRepository.save(homeroClient);
+
+			//Admin
+			Client admin = _clientRepository.save(new Client("admin","admin", "admin", passwordEncoder.encode("admin")));
 
 		};
 	}
