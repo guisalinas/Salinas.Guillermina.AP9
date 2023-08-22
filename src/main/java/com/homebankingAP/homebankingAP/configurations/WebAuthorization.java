@@ -19,12 +19,10 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                //.antMatchers("/**").permitAll()
-                .antMatchers("web/index.html/**", "web/css/**", "web/img/**", "web/js/**").permitAll()
-                .antMatchers(HttpMethod.POST, "api/login", "api/logout").permitAll()
-                .antMatchers("rest/**", "/h2-console/**").hasAuthority("ADMIN")
-                .antMatchers("web/**").hasAuthority("CLIENT");
-
+                .antMatchers("/web/index.html/**", "/web/css/**", "/web/img/**", "/web/js/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/logout").permitAll()
+                .antMatchers("/api/clients/current").hasAuthority("CLIENT")
+                .antMatchers("/web/manager.html","/web/manager.js", "/rest/**", "/h2-console/**", "/api/**").hasAuthority("ADMIN");
 
         http.formLogin()
                 .usernameParameter("email")

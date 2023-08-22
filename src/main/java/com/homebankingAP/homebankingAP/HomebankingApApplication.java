@@ -115,7 +115,7 @@ public class HomebankingApApplication {
 			_clientRepository.save(homeroClient);
 
 			//Admin
-			Client admin = _clientRepository.save(new Client("admin","admin", "admin", passwordEncoder.encode("admin")));
+			Client admin = _clientRepository.save(new Client("admin","admin", "admin@mindhub.com", passwordEncoder.encode("admin")));
 
 		};
 	}
