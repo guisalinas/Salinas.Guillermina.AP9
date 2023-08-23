@@ -43,7 +43,7 @@ public class ClientController {
             @RequestParam String password  ) {
 
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
@@ -56,8 +56,11 @@ public class ClientController {
 
     }
 
+
     @GetMapping("/clients/current")
-    public ClientDTO getAll(Authentication authentication) {
+    public ClientDTO getCurrentClient(Authentication authentication) {
         return new ClientDTO (_clientRepository.findByEmail(authentication.getName()));
     }
+
+
 }
