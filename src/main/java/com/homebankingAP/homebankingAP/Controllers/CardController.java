@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -30,18 +31,32 @@ public class CardController {
 
             Client client = _clientRepository.findByEmail(authentication.getName());
 
+            //Check number of cards and type:
             Set<Card> cards = client.getCards();
-            long creditCards = cards.stream().filter(card -> card.getType() == CardType.CREDIT).count();
-            long debitCards = cards.stream().filter(card -> card.getType() == CardType.DEBIT).count();
+            Set<Card> creditCards = cards.stream().filter(card -> card.getType() == CardType.CREDIT).collect(Collectors.toSet());
+            Set<Card> debitCards = cards.stream().filter(card -> card.getType() == CardType.DEBIT).collect(Collectors.toSet());
 
-            if (cardType == CardType.CREDIT && creditCards >= 3){
-                return new ResponseEntity<>("You cannot have more than three cards for card type.", HttpStatus.FORBIDDEN);
+            if (cardType == CardType.CREDIT){
+                if (creditCards.size() < 3){
+                    if (creditCards.stream().anyMatch(card -> card.getColor().equals(cardColor))){
+                        return new ResponseEntity<>("You already have such a card", HttpStatus.FORBIDDEN);
+                    }
+                } else{
+                    return new ResponseEntity<>("You have reached the credit card limit", HttpStatus.FORBIDDEN);
+                }
             };
 
-            if (cardType == CardType.DEBIT && debitCards >= 3){
-                return new ResponseEntity<>("You cannot have more than three cards for card type.", HttpStatus.FORBIDDEN);
+            if (cardType == CardType.DEBIT){
+                if (debitCards.size() < 3){
+                    if (debitCards.stream().anyMatch(card -> card.getColor().equals(cardColor))){
+                        return new ResponseEntity<>("You already have such a card", HttpStatus.FORBIDDEN);
+                    }
+                } else{
+                    return new ResponseEntity<>("You have reached the debit card limit", HttpStatus.FORBIDDEN);
+                }
             };
 
+            // create card
             String cardHolder = client.toString();
             String number = Card.generateCardNumber(_cardRepository);
             String  cvv = Card.generateCvv(_cardRepository);
