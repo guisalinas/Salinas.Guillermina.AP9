@@ -34,9 +34,13 @@ public class CardController {
             long creditCards = cards.stream().filter(card -> card.getType() == CardType.CREDIT).count();
             long debitCards = cards.stream().filter(card -> card.getType() == CardType.DEBIT).count();
 
-            if( creditCards > 3 || debitCards > 3){
+            if (cardType == CardType.CREDIT && creditCards >= 3){
                 return new ResponseEntity<>("You cannot have more than three cards for card type.", HttpStatus.FORBIDDEN);
-            }
+            };
+
+            if (cardType == CardType.DEBIT && debitCards >= 3){
+                return new ResponseEntity<>("You cannot have more than three cards for card type.", HttpStatus.FORBIDDEN);
+            };
 
             String cardHolder = client.toString();
             String number = Card.generateCardNumber(_cardRepository);
