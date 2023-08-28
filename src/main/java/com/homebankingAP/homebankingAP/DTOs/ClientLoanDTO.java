@@ -1,6 +1,6 @@
 package com.homebankingAP.homebankingAP.dtos;
 
-import com.homebankingAP.homebankingAP.Models.ClientLoan;
+import com.homebankingAP.homebankingAP.models.ClientLoan;
 
 public class ClientLoanDTO {
     private Long id;

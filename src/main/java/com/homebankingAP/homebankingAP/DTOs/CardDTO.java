@@ -1,8 +1,8 @@
 package com.homebankingAP.homebankingAP.dtos;
 
-import com.homebankingAP.homebankingAP.Models.Card;
-import com.homebankingAP.homebankingAP.Models.CardColor;
-import com.homebankingAP.homebankingAP.Models.CardType;
+import com.homebankingAP.homebankingAP.models.Card;
+import com.homebankingAP.homebankingAP.models.CardColor;
+import com.homebankingAP.homebankingAP.models.CardType;
 
 import java.time.LocalDate;
 
@@ -12,7 +12,7 @@ public class CardDTO {
     private CardType type;
     private CardColor color;
     private String number;
-    private int cvv;
+    private String cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
 
@@ -49,7 +49,7 @@ public class CardDTO {
         return number;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
@@ -79,7 +79,7 @@ public class CardDTO {
         this.number = number;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 

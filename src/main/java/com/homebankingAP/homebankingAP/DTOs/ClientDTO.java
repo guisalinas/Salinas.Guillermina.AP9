@@ -1,5 +1,5 @@
 package com.homebankingAP.homebankingAP.dtos;
-import com.homebankingAP.homebankingAP.Models.Client;
+import com.homebankingAP.homebankingAP.models.Client;
 
 import java.util.HashSet;
 import java.util.Set;

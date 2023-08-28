@@ -1,6 +1,5 @@
-package com.homebankingAP.homebankingAP.Models;
+package com.homebankingAP.homebankingAP.models;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

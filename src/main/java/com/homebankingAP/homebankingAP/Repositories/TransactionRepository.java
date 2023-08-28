@@ -1,6 +1,6 @@
-package com.homebankingAP.homebankingAP.Repositories;
+package com.homebankingAP.homebankingAP.repositories;
 
-import com.homebankingAP.homebankingAP.Models.Transaction;
+import com.homebankingAP.homebankingAP.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

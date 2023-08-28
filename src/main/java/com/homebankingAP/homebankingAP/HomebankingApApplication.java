@@ -1,7 +1,7 @@
 package com.homebankingAP.homebankingAP;
 
-import com.homebankingAP.homebankingAP.Models.*;
-import com.homebankingAP.homebankingAP.Repositories.*;
+import com.homebankingAP.homebankingAP.models.*;
+import com.homebankingAP.homebankingAP.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -102,15 +102,15 @@ public class HomebankingApApplication {
 
 			//Cards
 
-			Card melbaCard1 = new Card(melbaClient.toString(), CardType.DEBIT,CardColor.GOLD,"1325-2556-11025-9786" ,538, LocalDate.now().plusYears(5), LocalDate.now());
-			Card melbaCard2 = new Card(melbaClient.toString(), CardType.CREDIT,CardColor.TITANIUM,"5289-6599-1233-7458" ,145, LocalDate.now().plusYears(5), LocalDate.now());
+			Card melbaCard1 = new Card(melbaClient.toString(), CardType.DEBIT,CardColor.GOLD,"1325-2556-11025-9786" ,"538", LocalDate.now().plusYears(5), LocalDate.now());
+			Card melbaCard2 = new Card(melbaClient.toString(), CardType.CREDIT,CardColor.TITANIUM,"5289-6599-1233-7458" ,"145", LocalDate.now().plusYears(5), LocalDate.now());
 			_cardRepository.save(melbaCard1);
 			melbaClient.addCard(melbaCard1);
 			_cardRepository.save(melbaCard2);
 			melbaClient.addCard(melbaCard2);
 			_clientRepository.save(melbaClient);
 
-			Card homeroCard1 = new Card(homeroClient.toString(), CardType.CREDIT,CardColor.SILVER,"9532-6695-8311-4789" ,569, LocalDate.now().plusYears(5), LocalDate.now());
+			Card homeroCard1 = new Card(homeroClient.toString(), CardType.CREDIT,CardColor.SILVER,"9532-6695-8311-4789" ,"569", LocalDate.now().plusYears(5), LocalDate.now());
 			homeroClient.addCard(homeroCard1);
 			_clientRepository.save(homeroClient);
 

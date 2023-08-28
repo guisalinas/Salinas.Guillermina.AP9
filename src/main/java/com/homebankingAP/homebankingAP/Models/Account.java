@@ -1,8 +1,8 @@
-package com.homebankingAP.homebankingAP.Models;
+package com.homebankingAP.homebankingAP.models;
 
-
+import com.homebankingAP.homebankingAP.repositories.AccountRepository;
+import com.homebankingAP.homebankingAP.utils.UtilsMethods;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class Account {
     private Long id;
     private String number;
     private LocalDate creationDate;
-    private double balance;
+    private Double balance;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
@@ -91,5 +91,15 @@ public class Account {
         this.balance += transaction.getAmount();
     }
 
+    public static String generateAccountNumber(AccountRepository _accountRepository){
+        int number;
+        String numberAccount;
+        do{
+            number = UtilsMethods.getRandomNumber(1, 99999999);
+            numberAccount = String.format("VIN-%08d", number);
+        } while(_accountRepository.existsByNumber(numberAccount));
+
+        return numberAccount;
+    }
 
 }

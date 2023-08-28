@@ -1,4 +1,4 @@
-package com.homebankingAP.homebankingAP.Models;
+package com.homebankingAP.homebankingAP.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

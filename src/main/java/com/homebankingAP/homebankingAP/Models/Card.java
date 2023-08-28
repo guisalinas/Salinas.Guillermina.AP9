@@ -1,5 +1,7 @@
-package com.homebankingAP.homebankingAP.Models;
+package com.homebankingAP.homebankingAP.models;
 
+import com.homebankingAP.homebankingAP.repositories.CardRepository;
+import com.homebankingAP.homebankingAP.utils.UtilsMethods;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ public class Card {
     private CardType type;
     private CardColor color;
     private String number;
-    private int cvv;
+    private String cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -27,7 +29,7 @@ public class Card {
 
     }
 
-    public Card(String cardHolder, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
+    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDate thruDate, LocalDate fromDate) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -58,7 +60,7 @@ public class Card {
         return number;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
@@ -92,7 +94,7 @@ public class Card {
         this.number = number;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 
@@ -107,4 +109,36 @@ public class Card {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    //other methods
+
+    public static String generateCardNumber(CardRepository _cardRepository){
+
+        StringBuilder numberCard = new StringBuilder();
+        do{
+
+            for (int i = 0; i < 4; i++ ) {
+                numberCard.append(String.format("%04d", UtilsMethods.getRandomNumber(1, 9999)));
+
+                if (i < 3) {
+                    numberCard.append("-");
+                }
+            }
+
+        } while(_cardRepository.existsByNumber(numberCard.toString()));
+
+        return numberCard.toString();
+    }
+
+    public static String generateCvv(CardRepository _cardRepository){
+        int number;
+        String cvv;
+        do{
+            number = UtilsMethods.getRandomNumber(1, 999);
+            cvv = String.format("%03d", number);
+        } while(_cardRepository.existsByCvv(cvv));
+
+        return cvv;
+    }
+
 }

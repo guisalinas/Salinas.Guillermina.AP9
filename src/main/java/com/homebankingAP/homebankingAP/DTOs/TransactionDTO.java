@@ -1,7 +1,7 @@
 package com.homebankingAP.homebankingAP.dtos;
 
-import com.homebankingAP.homebankingAP.Models.Transaction;
-import com.homebankingAP.homebankingAP.Models.TransactionType;
+import com.homebankingAP.homebankingAP.models.Transaction;
+import com.homebankingAP.homebankingAP.models.TransactionType;
 
 import java.time.LocalDate;
 
