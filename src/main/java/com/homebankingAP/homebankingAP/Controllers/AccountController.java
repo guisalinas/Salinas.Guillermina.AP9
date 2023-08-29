@@ -1,5 +1,6 @@
 package com.homebankingAP.homebankingAP.controllers;
 
+import com.homebankingAP.homebankingAP.dtos.ClientDTO;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.models.Client;
 import com.homebankingAP.homebankingAP.repositories.ClientRepository;
@@ -89,5 +90,11 @@ public class AccountController {
         return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
     }
 
+    @GetMapping("/clients/current/accounts")
+    public List<AccountDTO> getCurrentAccounts(Authentication authentication){
+        Client client = _clientRepository.findByEmail(authentication.getName());
+
+        return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
+    }
 
 }

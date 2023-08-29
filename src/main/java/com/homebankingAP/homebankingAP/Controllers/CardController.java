@@ -1,5 +1,7 @@
 package com.homebankingAP.homebankingAP.controllers;
 
+import com.homebankingAP.homebankingAP.dtos.AccountDTO;
+import com.homebankingAP.homebankingAP.dtos.CardDTO;
 import com.homebankingAP.homebankingAP.models.*;
 import com.homebankingAP.homebankingAP.repositories.CardRepository;
 import com.homebankingAP.homebankingAP.repositories.ClientRepository;
@@ -7,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
@@ -71,5 +77,12 @@ public class CardController {
         }
 
         return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("/clients/current/cards")
+    public List<CardDTO> getCurrentAccounts(Authentication authentication){
+        Client client = _clientRepository.findByEmail(authentication.getName());
+
+        return client.getCards().stream().map(CardDTO::new).collect(toList());
     }
 }
