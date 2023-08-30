@@ -1,6 +1,4 @@
 package com.homebankingAP.homebankingAP.controllers;
-
-import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.models.Client;
 import com.homebankingAP.homebankingAP.models.Transaction;
@@ -42,23 +40,27 @@ public class TransactionController {
             }
 
             if(amount <= 0){
-                return new ResponseEntity<>("You cannot transfer a balance less than 0", HttpStatus.FORBIDDEN);
-            }
-
-            if (originAccountNumber.equals(destinyAccountNumber)){
-                return new ResponseEntity<>("You cannot transfer to the same originating account", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("You cannot transfer a balance less than or equal to 0", HttpStatus.FORBIDDEN);
             }
 
             Account destinyAccount = _accountRepository.findByNumber(destinyAccountNumber);
 
-            if(destinyAccount == null){
-                return new ResponseEntity<>("Destination account does not exist.", HttpStatus.FORBIDDEN);
+            if (destinyAccount == null){
+                return new ResponseEntity<>("The destination account does not exist", HttpStatus.FORBIDDEN);
             }
 
             Account originAccount = _accountRepository.findByNumber(originAccountNumber);
 
+            if(originAccount == null){
+                return new ResponseEntity<>("The origin account does not exist.", HttpStatus.FORBIDDEN);
+            }
+
+            if (originAccount.equals(destinyAccount)){
+                return new ResponseEntity<>("You cannot transfer to the same originating account", HttpStatus.FORBIDDEN);
+            }
+
             if (!originAccount.getClient().equals(client)){
-                return new ResponseEntity<>("Sorry, you don't have access to this account.", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Sorry, you don't have access to origin account.", HttpStatus.FORBIDDEN);
             }
 
             if (originAccount.getBalance() < amount){
