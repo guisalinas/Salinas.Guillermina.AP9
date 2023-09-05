@@ -1,6 +1,5 @@
 package com.homebankingAP.homebankingAP.controllers;
 
-import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.dtos.CardDTO;
 import com.homebankingAP.homebankingAP.models.*;
 import com.homebankingAP.homebankingAP.repositories.CardRepository;
@@ -50,7 +49,7 @@ public class CardController {
                 } else{
                     return new ResponseEntity<>("You have reached the credit card limit", HttpStatus.FORBIDDEN);
                 }
-            };
+            }
 
             if (cardType == CardType.DEBIT){
                 if (debitCards.size() < 3){
@@ -60,7 +59,7 @@ public class CardController {
                 } else{
                     return new ResponseEntity<>("You have reached the debit card limit", HttpStatus.FORBIDDEN);
                 }
-            };
+            }
 
             // create card
             String cardHolder = client.toString();

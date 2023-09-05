@@ -32,12 +32,6 @@ public class AccountController {
         return _accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
 
-//    @RequestMapping("/accounts/{id}")
-//    public AccountDTO getAccount(@PathVariable Long id){
-//        return new AccountDTO(_accountRepository.findById(id).orElse(null));
-//    }
-
-
     @RequestMapping("/accounts/{id}")
     public ResponseEntity<Object> getAccount (@PathVariable Long id, Authentication authentication){
         if(authentication != null){
