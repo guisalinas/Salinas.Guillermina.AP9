@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -26,7 +27,7 @@ public class HomebankingApApplication {
 	PasswordEncoder passwordEncoder;
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository _clientRepository, AccountRepository _accountRepository, TransactionRepository _transactionRepository, LoanRepository _loanRepository, CardRepository _cardRepository){
+	public CommandLineRunner initData(ClientRepository _clientRepository, AccountRepository _accountRepository, TransactionRepository _transactionRepository, LoanRepository _loanRepository, CardRepository _cardRepository, ClientLoanRepository _clientLoanRepository){
 		return (args) ->{
 
 			//Client 1: Melba Morel
@@ -88,7 +89,8 @@ public class HomebankingApApplication {
 			mortgageLoan.addClientLoan(melba_clientLoan1);
 			melbaClient.addClientLoan(melba_clientLoan2);
 			personalLoan.addClientLoan(melba_clientLoan2);
-			_clientRepository.save(melbaClient);
+			_clientLoanRepository.save(melba_clientLoan1);
+			_clientLoanRepository.save(melba_clientLoan2);
 
 
 			//Homero loans
@@ -98,22 +100,22 @@ public class HomebankingApApplication {
 			personalLoan.addClientLoan(homero_clientLoan3);
 			homeroClient.addClientLoan(homero_clientLoan4);
 			carLoan.addClientLoan(homero_clientLoan4);
-			_clientRepository.save(homeroClient);
+			_clientLoanRepository.save(homero_clientLoan3);
+			_clientLoanRepository.save(homero_clientLoan4);
 
 
 			//Cards
 
-			Card melbaCard1 = new Card(melbaClient.toString(), CardType.DEBIT,CardColor.GOLD,"1325-2556-11025-9786" ,"538", LocalDate.now().plusYears(5), LocalDate.now());
-			Card melbaCard2 = new Card(melbaClient.toString(), CardType.CREDIT,CardColor.TITANIUM,"5289-6599-1233-7458" ,"145", LocalDate.now().plusYears(5), LocalDate.now());
-			_cardRepository.save(melbaCard1);
+			Card melbaCard1 = new Card(melbaClient.toString(), CardType.DEBIT,CardColor.GOLD,"1325-2556-11025-9786" ,"538", LocalDateTime.now().plusYears(5), LocalDateTime.now());
+			Card melbaCard2 = new Card(melbaClient.toString(), CardType.CREDIT,CardColor.TITANIUM,"5289-6599-1233-7458" ,"145", LocalDateTime.now().plusYears(5), LocalDateTime.now());
 			melbaClient.addCard(melbaCard1);
-			_cardRepository.save(melbaCard2);
 			melbaClient.addCard(melbaCard2);
-			_clientRepository.save(melbaClient);
+			_cardRepository.save(melbaCard1);
+			_cardRepository.save(melbaCard2);
 
-			Card homeroCard1 = new Card(homeroClient.toString(), CardType.CREDIT,CardColor.SILVER,"9532-6695-8311-4789" ,"569", LocalDate.now().plusYears(5), LocalDate.now());
+			Card homeroCard1 = new Card(homeroClient.toString(), CardType.CREDIT,CardColor.SILVER,"9532-6695-8311-4789" ,"569", LocalDateTime.now().plusYears(5), LocalDateTime.now());
 			homeroClient.addCard(homeroCard1);
-			_clientRepository.save(homeroClient);
+			_cardRepository.save(homeroCard1);
 
 			//Admin
 			Client admin = _clientRepository.save(new Client("admin","admin", "admin@mindhub.com", passwordEncoder.encode("admin")));

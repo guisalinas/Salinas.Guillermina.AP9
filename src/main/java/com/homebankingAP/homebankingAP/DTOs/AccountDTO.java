@@ -35,7 +35,7 @@ public class AccountDTO {
         this.number = number;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getCreationDate() {
         return date;
     }
 

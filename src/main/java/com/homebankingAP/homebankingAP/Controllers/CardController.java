@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,8 +65,8 @@ public class CardController {
             String cardHolder = client.toString();
             String number = Card.generateCardNumber(_cardRepository);
             String  cvv = Card.generateCvv(_cardRepository);
-            LocalDate thruDate = LocalDate.now().plusYears(5);
-            LocalDate fromDate = LocalDate.now();
+            LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
+            LocalDateTime fromDate = LocalDateTime.now();
 
             Card card = new Card(cardHolder, cardType, cardColor, number, cvv, thruDate, fromDate);
             client.addCard(card);

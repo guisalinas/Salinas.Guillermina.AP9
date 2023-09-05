@@ -5,6 +5,7 @@ import com.homebankingAP.homebankingAP.models.CardColor;
 import com.homebankingAP.homebankingAP.models.CardType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CardDTO {
     private Long id;
@@ -13,8 +14,8 @@ public class CardDTO {
     private CardColor color;
     private String number;
     private String cvv;
-    private LocalDate thruDate;
-    private LocalDate fromDate;
+    private LocalDateTime thruDate;
+    private LocalDateTime fromDate;
 
     public CardDTO(Card card){
         this.id= card.getId();
@@ -53,11 +54,11 @@ public class CardDTO {
         return cvv;
     }
 
-    public LocalDate getThruDate() {
+    public LocalDateTime getThruDate() {
         return thruDate;
     }
 
-    public LocalDate getFromDate() {
+    public LocalDateTime getFromDate() {
         return fromDate;
     }
 
@@ -83,11 +84,11 @@ public class CardDTO {
         this.cvv = cvv;
     }
 
-    public void setThruDate(LocalDate thruDate) {
+    public void setThruDate(LocalDateTime thruDate) {
         this.thruDate = thruDate;
     }
 
-    public void setFromDate(LocalDate fromDate) {
+    public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
     }
 }
