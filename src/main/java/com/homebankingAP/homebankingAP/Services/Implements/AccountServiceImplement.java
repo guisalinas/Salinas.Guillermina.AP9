@@ -5,11 +5,13 @@ import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@Service
 public class AccountServiceImplement implements AccountService {
 
     @Autowired

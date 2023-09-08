@@ -4,7 +4,9 @@ import com.homebankingAP.homebankingAP.Services.CardService;
 import com.homebankingAP.homebankingAP.models.Card;
 import com.homebankingAP.homebankingAP.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CardServiceImplement implements CardService {
 
     @Autowired

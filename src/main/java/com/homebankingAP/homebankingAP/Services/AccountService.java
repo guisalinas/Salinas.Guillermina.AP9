@@ -2,9 +2,11 @@ package com.homebankingAP.homebankingAP.Services;
 
 import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.models.Account;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface AccountService {
 
     List<AccountDTO> getAccountsDTO();

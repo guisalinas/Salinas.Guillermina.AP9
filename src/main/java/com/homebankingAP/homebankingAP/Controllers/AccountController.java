@@ -77,7 +77,6 @@ public class AccountController {
             _accountService.saveAccount(account);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
-
         }
 
         return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);

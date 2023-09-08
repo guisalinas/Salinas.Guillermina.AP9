@@ -5,11 +5,13 @@ import com.homebankingAP.homebankingAP.dtos.LoanDTO;
 import com.homebankingAP.homebankingAP.models.Loan;
 import com.homebankingAP.homebankingAP.repositories.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@Service
 public class LoanServiceImplement implements LoanService {
 
     @Autowired
