@@ -1,0 +1,14 @@
+package com.homebankingAP.homebankingAP.Services;
+
+import com.homebankingAP.homebankingAP.dtos.LoanDTO;
+import com.homebankingAP.homebankingAP.models.Loan;
+
+import java.util.List;
+
+public interface LoanService {
+    List<LoanDTO> getLoansDTO();
+    Loan findLoanByID(Long id);
+    LoanDTO getLoanDTO(Long id);
+
+
+}

@@ -1,4 +1,7 @@
 package com.homebankingAP.homebankingAP.controllers;
+import com.homebankingAP.homebankingAP.Services.AccountService;
+import com.homebankingAP.homebankingAP.Services.ClientService;
+import com.homebankingAP.homebankingAP.Services.TransactionService;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.models.Client;
 import com.homebankingAP.homebankingAP.models.Transaction;
@@ -21,11 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
 
     @Autowired
-    private TransactionRepository _transactionRepository;
+    private TransactionService _transactionService;
     @Autowired
-    private ClientRepository _clientRepository;
+    private ClientService _clientService;
     @Autowired
-    private AccountRepository _accountRepository;
+    private AccountService _accountService;
 
     @Transactional
     @RequestMapping(path = "/transactions", method = RequestMethod.POST)
@@ -36,7 +39,7 @@ public class TransactionController {
 
         if(authentication != null){
 
-            Client client = _clientRepository.findByEmail(authentication.getName());
+            Client client = _clientService.findClientByEmail(authentication.getName());
 
             if(description.isBlank() || destinyAccountNumber.isBlank() || originAccountNumber.isBlank()){
                 return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
@@ -46,13 +49,13 @@ public class TransactionController {
                 return new ResponseEntity<>("You cannot transfer a balance less than or equal to 0", HttpStatus.FORBIDDEN);
             }
 
-            Account destinyAccount = _accountRepository.findByNumber(destinyAccountNumber);
+            Account destinyAccount = _accountService.findAccountByNumber(destinyAccountNumber);
 
             if (destinyAccount == null){
                 return new ResponseEntity<>("The destination account does not exist", HttpStatus.FORBIDDEN);
             }
 
-            Account originAccount = _accountRepository.findByNumber(originAccountNumber);
+            Account originAccount = _accountService.findAccountByNumber(originAccountNumber);
 
             if(originAccount == null){
                 return new ResponseEntity<>("The origin account does not exist.", HttpStatus.FORBIDDEN);
@@ -74,16 +77,18 @@ public class TransactionController {
             String descriptionOrigin = description + " " + destinyAccountNumber;
             String descriptionDestiny = description + " " + originAccountNumber;
 
-            Transaction originAccountTransaction = _transactionRepository.save( new Transaction(TransactionType.DEBIT, -amount, descriptionOrigin));
+            Transaction originAccountTransaction = new Transaction(TransactionType.DEBIT, -amount, descriptionOrigin);
+            _transactionService.saveTransaction(originAccountTransaction);
             originAccount.addTransaction(originAccountTransaction);
-            _transactionRepository.save(originAccountTransaction);
+            _transactionService.saveTransaction(originAccountTransaction);
 
-            Transaction destinyAccountTransaction = _transactionRepository.save(new Transaction(TransactionType.CREDIT, amount, descriptionDestiny));
+            Transaction destinyAccountTransaction = new Transaction(TransactionType.CREDIT, amount, descriptionDestiny);
+            _transactionService.saveTransaction(destinyAccountTransaction);
             destinyAccount.addTransaction(destinyAccountTransaction);
-            _transactionRepository.save(destinyAccountTransaction);
+            _transactionService.saveTransaction(destinyAccountTransaction);
 
-            _accountRepository.save(originAccount);
-            _accountRepository.save(destinyAccount);
+            _accountService.saveAccount(originAccount);
+            _accountService.saveAccount(destinyAccount);
 
             return new ResponseEntity<>("Successful transfer", HttpStatus.CREATED);
 

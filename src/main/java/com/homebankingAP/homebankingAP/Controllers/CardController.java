@@ -1,9 +1,10 @@
 package com.homebankingAP.homebankingAP.controllers;
 
+import com.homebankingAP.homebankingAP.Services.CardService;
+import com.homebankingAP.homebankingAP.Services.ClientService;
 import com.homebankingAP.homebankingAP.dtos.CardDTO;
 import com.homebankingAP.homebankingAP.models.*;
 import com.homebankingAP.homebankingAP.repositories.CardRepository;
-import com.homebankingAP.homebankingAP.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +26,16 @@ import static java.util.stream.Collectors.toList;
 public class CardController {
 
     @Autowired
-    ClientRepository _clientRepository;
+    private ClientService _clientService;
     @Autowired
-    CardRepository _cardRepository;
+    private CardService _cardService;
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> createCard(Authentication authentication, CardColor cardColor, CardType cardType){
 
         if (authentication != null){
 
-            Client client = _clientRepository.findByEmail(authentication.getName());
+            Client client = _clientService.findClientByEmail(authentication.getName());
 
             //Check number of cards and type:
             Set<Card> cards = client.getCards();
@@ -63,14 +64,14 @@ public class CardController {
 
             // create card
             String cardHolder = client.toString();
-            String number = Card.generateCardNumber(_cardRepository);
-            String  cvv = Card.generateCvv(_cardRepository);
+            String number = _cardService.generateCardNumber();
+            String  cvv = _cardService.generateCvv();
             LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
             LocalDateTime fromDate = LocalDateTime.now();
 
             Card card = new Card(cardHolder, cardType, cardColor, number, cvv, thruDate, fromDate);
             client.addCard(card);
-            _cardRepository.save(card);
+            _cardService.saveCard(card);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -80,7 +81,7 @@ public class CardController {
 
     @GetMapping("/clients/current/cards")
     public List<CardDTO> getCurrentAccounts(Authentication authentication){
-        Client client = _clientRepository.findByEmail(authentication.getName());
+        Client client = _clientService.findClientByEmail(authentication.getName());
 
         return client.getCards().stream().map(CardDTO::new).collect(toList());
     }

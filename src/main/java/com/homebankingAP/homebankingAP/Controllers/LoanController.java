@@ -1,11 +1,12 @@
 package com.homebankingAP.homebankingAP.controllers;
 
+import com.homebankingAP.homebankingAP.Services.AccountService;
+import com.homebankingAP.homebankingAP.Services.ClientService;
+import com.homebankingAP.homebankingAP.Services.LoanService;
+import com.homebankingAP.homebankingAP.Services.TransactionService;
 import com.homebankingAP.homebankingAP.dtos.LoanApplicationDTO;
 import com.homebankingAP.homebankingAP.dtos.LoanDTO;
 import com.homebankingAP.homebankingAP.models.*;
-import com.homebankingAP.homebankingAP.repositories.AccountRepository;
-import com.homebankingAP.homebankingAP.repositories.ClientRepository;
-import com.homebankingAP.homebankingAP.repositories.LoanRepository;
 import com.homebankingAP.homebankingAP.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,25 +16,23 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
 public class LoanController {
 
     @Autowired
-    private ClientRepository _clientRepository;
+    private ClientService _clientService;
     @Autowired
-    private LoanRepository _loanRepository;
+    private LoanService _loanService;
     @Autowired
-    private AccountRepository _accountRepository;
+    private AccountService _accountService;
     @Autowired
-    private TransactionRepository _transactionRepository;
+    private TransactionService _transactionService;
 
     @GetMapping("/loans")
     public List<LoanDTO> getLoans(){
-
-        return _loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());
+        return _loanService.getLoansDTO();
     }
 
     @Transactional
@@ -42,7 +41,7 @@ public class LoanController {
 
         if (authentication != null){
 
-            Client client = _clientRepository.findByEmail(authentication.getName());
+            Client client = _clientService.findClientByEmail(authentication.getName());
 
             if(loanApplicationDTO.getLoanId() == null || loanApplicationDTO.getToAccountNumber().isBlank() || loanApplicationDTO.getPayments() == 0 || loanApplicationDTO.getAmount() == 0){
                 return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
@@ -52,7 +51,7 @@ public class LoanController {
                 return new ResponseEntity<>("You cannot apply for a loan less than or equal to 0.", HttpStatus.FORBIDDEN);
             }
 
-            Account destinyAccount = _accountRepository.findByNumber(loanApplicationDTO.getToAccountNumber());
+            Account destinyAccount = _accountService.findAccountByNumber(loanApplicationDTO.getToAccountNumber());
 
             if (destinyAccount == null){
                 return new ResponseEntity<>("The destination account does not exist", HttpStatus.FORBIDDEN);
@@ -62,7 +61,7 @@ public class LoanController {
                 return new ResponseEntity<>("You cannot apply for a loan for someone else's account.", HttpStatus.FORBIDDEN);
             }
 
-            Loan loan = _loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
+            Loan loan = _loanService.findLoanByID(loanApplicationDTO.getLoanId());
 
             if (loan == null){
                 return new ResponseEntity<>("That requested loan does not exist", HttpStatus.FORBIDDEN);
@@ -87,9 +86,9 @@ public class LoanController {
             String description = loan.getName() + " Loan approved.";
             Transaction transaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), description);
             destinyAccount.addTransaction(transaction);
-            _transactionRepository.save(transaction);
-            _accountRepository.save(destinyAccount);
-            _clientRepository.save(client);
+            _transactionService.saveTransaction(transaction);
+            _accountService.saveAccount(destinyAccount);
+            _clientService.saveClient(client);
 
             return new ResponseEntity<>("A loan has been successfully requested" ,HttpStatus.CREATED);
         }

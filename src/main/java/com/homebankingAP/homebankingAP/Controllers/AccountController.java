@@ -1,11 +1,10 @@
 package com.homebankingAP.homebankingAP.controllers;
 
-import com.homebankingAP.homebankingAP.dtos.ClientDTO;
+import com.homebankingAP.homebankingAP.Services.AccountService;
+import com.homebankingAP.homebankingAP.Services.ClientService;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.models.Client;
-import com.homebankingAP.homebankingAP.repositories.ClientRepository;
 import com.homebankingAP.homebankingAP.dtos.AccountDTO;
-import com.homebankingAP.homebankingAP.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +22,21 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
 
     @Autowired
-    private AccountRepository _accountRepository;
+    private AccountService _accountService;
     @Autowired
-    private ClientRepository _clientRepository;
+    private ClientService _clientService;
 
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-        return _accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
+        return _accountService.getAccountsDTO();
     }
 
     @RequestMapping("/accounts/{id}")
     public ResponseEntity<Object> getAccount (@PathVariable Long id, Authentication authentication){
         if(authentication != null){
 
-            Client client = _clientRepository.findByEmail(authentication.getName());
-            Account account = _accountRepository.findById(id).orElse(null);
+            Client client = _clientService.findClientByEmail(authentication.getName());
+            Account account = _accountService.findAccountById(id);
 
             if (account == null){
                 return new ResponseEntity<>("This account does not exist", HttpStatus.NOT_FOUND);
@@ -62,7 +61,7 @@ public class AccountController {
 
         if (authentication != null){
 
-            Client client = _clientRepository.findByEmail(authentication.getName());
+            Client client = _clientService.findClientByEmail(authentication.getName());
 
             Set<Account> accounts = client.getAccounts();
             if(accounts.size() > 3){
@@ -70,12 +69,12 @@ public class AccountController {
             }
 
             LocalDate date = LocalDate.now();
-            String numberAccount = Account.generateAccountNumber(_accountRepository);
+            String numberAccount = _accountService.generateNumber();
             double balance = 0;
 
             Account account = new Account(numberAccount, date, balance);
             client.addAccount(account);
-            _accountRepository.save(account);
+            _accountService.saveAccount(account);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -86,8 +85,7 @@ public class AccountController {
 
     @GetMapping("/clients/current/accounts")
     public List<AccountDTO> getCurrentAccounts(Authentication authentication){
-        Client client = _clientRepository.findByEmail(authentication.getName());
-
+        Client client = _clientService.findClientByEmail(authentication.getName());
         return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
     }
 
