@@ -22,6 +22,7 @@ public class HomebankingApApplication {
 		SpringApplication.run(HomebankingApApplication.class, args);
 	}
 
+	/*
 	//spring security:
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -121,7 +122,7 @@ public class HomebankingApApplication {
 			Client admin = _clientRepository.save(new Client("admin","admin", "admin@mindhub.com", passwordEncoder.encode("admin")));
 
 		};
-	}
+	}*/
 
 }
 
