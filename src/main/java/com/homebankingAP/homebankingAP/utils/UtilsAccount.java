@@ -1,10 +1,12 @@
 package com.homebankingAP.homebankingAP.utils;
 
 import com.homebankingAP.homebankingAP.Services.AccountService;
-import com.homebankingAP.homebankingAP.repositories.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class UtilsAccount {
+
+public final class UtilsAccount {
+
+    private UtilsAccount() {
+    }
 
     public static String generateAccountNumber(AccountService _accountService){
         int number;

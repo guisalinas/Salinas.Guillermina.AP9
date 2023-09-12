@@ -1,9 +1,11 @@
 package com.homebankingAP.homebankingAP.utils;
 
 import com.homebankingAP.homebankingAP.Services.CardService;
-import com.homebankingAP.homebankingAP.repositories.CardRepository;
 
-public class UtilsCard {
+public final class UtilsCard {
+
+    private UtilsCard() {
+    }
 
     public static String generateCardNumber(CardService _cardService){
 
