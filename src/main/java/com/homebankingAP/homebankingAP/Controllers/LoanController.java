@@ -36,7 +36,7 @@ public class LoanController {
     }
 
     @Transactional
-    @RequestMapping(value="/loans", method=RequestMethod.POST)
+    @PostMapping("/loans")
     public ResponseEntity<Object> applyLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication){
 
         if (authentication != null){

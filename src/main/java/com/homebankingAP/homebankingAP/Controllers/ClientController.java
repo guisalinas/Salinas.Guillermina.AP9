@@ -27,12 +27,12 @@ public class ClientController {
     @Autowired
     private AccountService _accountService;
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getClients(){
         return _clientService.getClientsDTO();
     }
 
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
         return _clientService.getClientDTO(id);
     }
@@ -40,7 +40,7 @@ public class ClientController {
     //New client:
     @Autowired
     PasswordEncoder passwordEncoder;
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName,
             @RequestParam String lastName,

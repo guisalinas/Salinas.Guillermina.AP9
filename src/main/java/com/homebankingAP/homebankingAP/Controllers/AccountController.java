@@ -27,12 +27,12 @@ public class AccountController {
     @Autowired
     private ClientService _clientService;
 
-    @RequestMapping("/accounts")
+    @GetMapping("/accounts")
     public List<AccountDTO> getAccounts(){
         return _accountService.getAccountsDTO();
     }
 
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public ResponseEntity<Object> getAccount (@PathVariable Long id, Authentication authentication){
         if(authentication != null){
 
@@ -57,7 +57,7 @@ public class AccountController {
 
     //new account
 
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication){
 
         if (authentication != null){
