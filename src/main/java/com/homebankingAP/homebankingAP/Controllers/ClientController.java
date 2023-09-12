@@ -5,6 +5,8 @@ import com.homebankingAP.homebankingAP.Services.ClientService;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.models.Client;
 import com.homebankingAP.homebankingAP.dtos.ClientDTO;
+import com.homebankingAP.homebankingAP.utils.UtilsAccount;
+import com.homebankingAP.homebankingAP.utils.UtilsMethods;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +60,7 @@ public class ClientController {
         _clientService.saveClient(client);
 
         LocalDate date = LocalDate.now();
-        String numberAccount = _accountService.generateNumber();
+        String numberAccount = UtilsAccount.generateAccountNumber(_accountService);
         double balance = 0;
 
         Account account = new Account(numberAccount, date, balance);

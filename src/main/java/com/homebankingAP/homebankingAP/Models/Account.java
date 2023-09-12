@@ -91,15 +91,4 @@ public class Account {
         this.balance += transaction.getAmount();
     }
 
-    public static String generateAccountNumber(AccountRepository _accountRepository){
-        int number;
-        String numberAccount;
-        do{
-            number = UtilsMethods.getRandomNumber(1, 99999999);
-            numberAccount = String.format("VIN-%08d", number);
-        } while(_accountRepository.existsByNumber(numberAccount));
-
-        return numberAccount;
-    }
-
 }

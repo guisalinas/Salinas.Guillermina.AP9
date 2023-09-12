@@ -17,12 +17,24 @@ public class CardServiceImplement implements CardService {
     }
 
     @Override
-    public String generateCardNumber() {
-        return Card.generateCardNumber(_cardRepository);
+    public boolean existsByNumber(String cardNumber) {
+        return _cardRepository.existsByNumber(cardNumber);
     }
 
     @Override
-    public String generateCvv() {
-        return Card.generateCvv(_cardRepository);
+    public boolean existsByCvv(String cvv) {
+        return _cardRepository.existsByCvv(cvv);
     }
+
+////    @Override
+////    public String generateCardNumber() {
+////        return Card.generateCardNumber(_cardRepository);
+////    }
+//
+//    @Override
+//    public String generateCvv() {
+//        return Card.generateCvv(_cardRepository);
+//    }
+
+
 }

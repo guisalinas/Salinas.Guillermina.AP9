@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CardService {
     void saveCard(Card card);
-    String generateCardNumber();
-    String generateCvv();
+    boolean existsByNumber(String cardNumber);
+    boolean existsByCvv(String cvv);
+
 }

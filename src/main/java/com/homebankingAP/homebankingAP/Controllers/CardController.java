@@ -5,6 +5,7 @@ import com.homebankingAP.homebankingAP.Services.ClientService;
 import com.homebankingAP.homebankingAP.dtos.CardDTO;
 import com.homebankingAP.homebankingAP.models.*;
 import com.homebankingAP.homebankingAP.repositories.CardRepository;
+import com.homebankingAP.homebankingAP.utils.UtilsCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,8 +65,8 @@ public class CardController {
 
             // create card
             String cardHolder = client.toString();
-            String number = _cardService.generateCardNumber();
-            String  cvv = _cardService.generateCvv();
+            String number = UtilsCard.generateCardNumber(_cardService);
+            String  cvv = UtilsCard.generateCvv(_cardService);
             LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
             LocalDateTime fromDate = LocalDateTime.now();
 

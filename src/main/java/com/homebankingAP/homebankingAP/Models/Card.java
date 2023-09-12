@@ -111,35 +111,5 @@ public class Card {
         this.client = client;
     }
 
-    //other methods
-
-    public static String generateCardNumber(CardRepository _cardRepository){
-
-        StringBuilder numberCard = new StringBuilder();
-        do{
-
-            for (int i = 0; i < 4; i++ ) {
-                numberCard.append(String.format("%04d", UtilsMethods.getRandomNumber(1, 9999)));
-
-                if (i < 3) {
-                    numberCard.append("-");
-                }
-            }
-
-        } while(_cardRepository.existsByNumber(numberCard.toString()));
-
-        return numberCard.toString();
-    }
-
-    public static String generateCvv(CardRepository _cardRepository){
-        int number;
-        String cvv;
-        do{
-            number = UtilsMethods.getRandomNumber(1, 999);
-            cvv = String.format("%03d", number);
-        } while(_cardRepository.existsByCvv(cvv));
-
-        return cvv;
-    }
 
 }

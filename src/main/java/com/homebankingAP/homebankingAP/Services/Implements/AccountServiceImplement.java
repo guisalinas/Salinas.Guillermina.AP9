@@ -4,6 +4,7 @@ import com.homebankingAP.homebankingAP.Services.AccountService;
 import com.homebankingAP.homebankingAP.dtos.AccountDTO;
 import com.homebankingAP.homebankingAP.models.Account;
 import com.homebankingAP.homebankingAP.repositories.AccountRepository;
+import com.homebankingAP.homebankingAP.utils.UtilsAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class AccountServiceImplement implements AccountService {
     }
 
     @Override
-    public String generateNumber() {
-        return Account.generateAccountNumber(_accountRepository);
+    public boolean existsByNumber(String number) {
+        return _accountRepository.existsByNumber(number);
     }
 }
