@@ -36,5 +36,4 @@ public class CardServiceImplement implements CardService {
       _cardRepository.delete(card);
     }
 
-
 }

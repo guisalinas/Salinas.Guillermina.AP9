@@ -66,7 +66,7 @@ public class CardController {
             String  cvv = UtilsCard.generateCvv(_cardService);
             LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
             LocalDateTime fromDate = LocalDateTime.now();
-
+            //boolean isExpired = false;
             Card card = new Card(cardHolder, cardType, cardColor, number, cvv, thruDate, fromDate);
             client.addCard(card);
             _cardService.saveCard(card);
@@ -80,7 +80,6 @@ public class CardController {
     @GetMapping("/clients/current/cards")
     public List<CardDTO> getCurrentAccounts(Authentication authentication){
         Client client = _clientService.findClientByEmail(authentication.getName());
-
         return client.getCards().stream().map(CardDTO::new).collect(toList());
     }
 

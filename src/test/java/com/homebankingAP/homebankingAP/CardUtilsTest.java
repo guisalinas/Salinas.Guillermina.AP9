@@ -41,7 +41,7 @@ public class CardUtilsTest {
     public void cardDeleted_Service(){
         Client client = new Client("Ann", "Smith", "Ann@Smith.com","myFavoritePassword");
         _clientService.saveClient(client);
-        Card card =  new Card(client.toString(), CardType.DEBIT, CardColor.GOLD,"0934-9388-5874", "756", LocalDateTime.now().plusYears(5), LocalDateTime.now());
+        Card card =  new Card(client.toString(), CardType.DEBIT, CardColor.GOLD,"0934-9388-5874", "756", LocalDateTime.now().plusYears(5), LocalDateTime.now()/*, false*/);
 
         _cardService.saveCard(card);
         assertThat(_cardService.getCardById(card.getId()), is(notNullValue()));

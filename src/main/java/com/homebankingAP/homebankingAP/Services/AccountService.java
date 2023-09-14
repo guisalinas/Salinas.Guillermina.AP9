@@ -15,5 +15,5 @@ public interface AccountService {
     AccountDTO findAccountByNumberDTO(String number);
     AccountDTO getAccountDTO(Long id);
     void saveAccount(Account account);
-   boolean existsByNumber(String number);
+    boolean existsByNumber(String number);
 }

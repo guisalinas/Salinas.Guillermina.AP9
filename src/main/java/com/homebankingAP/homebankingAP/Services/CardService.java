@@ -10,5 +10,4 @@ public interface CardService {
     boolean existsByCvv(String cvv);
     Card getCardById(Long id);
     void deleteCard(Card card);
-
 }

@@ -16,6 +16,7 @@ public class CardDTO {
     private String cvv;
     private LocalDateTime thruDate;
     private LocalDateTime fromDate;
+    //private boolean isExpired;
 
     public CardDTO(Card card){
         this.id= card.getId();
@@ -26,6 +27,7 @@ public class CardDTO {
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+        //this.isExpired = card.isExpired();
     }
 
     //getters
@@ -62,6 +64,9 @@ public class CardDTO {
         return fromDate;
     }
 
+//    public boolean isExpired() {
+//        return isExpired;
+//    }
     //setters
 
     public void setCardHolder(String cardHolder) {
@@ -91,4 +96,8 @@ public class CardDTO {
     public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
     }
+
+//    public void setExpired(boolean expired) {
+//        isExpired = expired;
+//    }
 }

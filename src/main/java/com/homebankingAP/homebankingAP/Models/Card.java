@@ -22,6 +22,9 @@ public class Card {
     private String cvv;
     private LocalDateTime thruDate;
     private LocalDateTime fromDate;
+
+    //@Column(nullable = true)
+    //private Boolean isExpired;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -30,7 +33,7 @@ public class Card {
 
     }
 
-    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate) {
+    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate/*, boolean isExpired*/) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -38,6 +41,7 @@ public class Card {
         this.cvv = cvv;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
+        //this.isExpired = isExpired;
     }
 
     //getters
@@ -45,6 +49,14 @@ public class Card {
         return id;
     }
 
+//    public Boolean isExpired() {
+//        if (LocalDateTime.now().isAfter(this.thruDate)){
+//            return isExpired = true;
+//        }
+//        else {
+//            return isExpired = false;
+//        }
+//    }
     public String getCardHolder() {
         return cardHolder;
     }
@@ -52,7 +64,6 @@ public class Card {
     public CardType getType() {
         return type;
     }
-
     public CardColor getColor() {
         return color;
     }
@@ -60,15 +71,12 @@ public class Card {
     public String getNumber() {
         return number;
     }
-
     public String getCvv() {
         return cvv;
     }
-
     public LocalDateTime getThruDate() {
         return thruDate;
     }
-
     public LocalDateTime getFromDate() {
         return fromDate;
     }
@@ -82,6 +90,10 @@ public class Card {
     public void setCardHolder(String cardHolder) {
         this.cardHolder = cardHolder;
     }
+
+//    public void setExpired(Boolean expired) {
+//            this.isExpired = expired;
+//    }
 
     public void setType(CardType type) {
         this.type = type;
