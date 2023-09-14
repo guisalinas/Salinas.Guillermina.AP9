@@ -1,9 +1,6 @@
 package com.homebankingAP.homebankingAP.controllers;
 
-import com.homebankingAP.homebankingAP.Services.AccountService;
-import com.homebankingAP.homebankingAP.Services.ClientService;
-import com.homebankingAP.homebankingAP.Services.LoanService;
-import com.homebankingAP.homebankingAP.Services.TransactionService;
+import com.homebankingAP.homebankingAP.Services.*;
 import com.homebankingAP.homebankingAP.dtos.LoanApplicationDTO;
 import com.homebankingAP.homebankingAP.dtos.LoanDTO;
 import com.homebankingAP.homebankingAP.models.*;
@@ -29,6 +26,8 @@ public class LoanController {
     private AccountService _accountService;
     @Autowired
     private TransactionService _transactionService;
+    @Autowired
+    private ClientLoanService _clientLoanService;
 
     @GetMapping("/loans")
     public List<LoanDTO> getLoans(){
@@ -81,6 +80,7 @@ public class LoanController {
             ClientLoan clientLoan = new ClientLoan(amountLoan, loanApplicationDTO.getPayments());
             client.addClientLoan(clientLoan);
             loan.addClientLoan(clientLoan);
+            _clientLoanService.saveClientLoan(clientLoan);
 
             //transaction
             String description = loan.getName() + " Loan approved.";

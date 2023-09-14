@@ -83,4 +83,28 @@ public class CardController {
 
         return client.getCards().stream().map(CardDTO::new).collect(toList());
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteCard(@PathVariable("id") Long id, Authentication authentication){
+        if (authentication != null){
+
+            Client client = _clientService.findClientByEmail(authentication.getName());
+
+            if (id == null){
+                return new ResponseEntity<>("Please, indicate the ID card number", HttpStatus.FORBIDDEN);
+            }
+
+            Card cardToDelete = _cardService.getCardById(id);
+
+            if (cardToDelete == null){
+                return new ResponseEntity<>("There is no card with that ID", HttpStatus.FORBIDDEN);
+            }
+
+            _cardService.deleteCard(cardToDelete);
+            return new ResponseEntity<>("The Card has been successfully removed" ,HttpStatus.CREATED);
+
+
+        }
+        return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
+    }
 }

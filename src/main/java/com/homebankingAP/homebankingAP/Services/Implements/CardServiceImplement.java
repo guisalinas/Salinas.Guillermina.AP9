@@ -26,15 +26,15 @@ public class CardServiceImplement implements CardService {
         return _cardRepository.existsByCvv(cvv);
     }
 
-////    @Override
-////    public String generateCardNumber() {
-////        return Card.generateCardNumber(_cardRepository);
-////    }
-//
-//    @Override
-//    public String generateCvv() {
-//        return Card.generateCvv(_cardRepository);
-//    }
+    @Override
+    public Card getCardById(Long id) {
+        return _cardRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteCard(Card card) {
+      _cardRepository.delete(card);
+    }
 
 
 }

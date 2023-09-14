@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface LoanService {
     List<LoanDTO> getLoansDTO();
     Loan findLoanByID(Long id);
