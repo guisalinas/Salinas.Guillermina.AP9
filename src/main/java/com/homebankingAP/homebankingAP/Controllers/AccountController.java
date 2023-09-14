@@ -1,4 +1,4 @@
-package com.homebankingAP.homebankingAP.controllers;
+package com.homebankingAP.homebankingAP.Controllers;
 
 import com.homebankingAP.homebankingAP.Services.AccountService;
 import com.homebankingAP.homebankingAP.Services.ClientService;

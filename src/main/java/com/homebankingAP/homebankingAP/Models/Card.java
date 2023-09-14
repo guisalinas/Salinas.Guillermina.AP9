@@ -23,8 +23,7 @@ public class Card {
     private LocalDateTime thruDate;
     private LocalDateTime fromDate;
 
-    //@Column(nullable = true)
-    //private Boolean isExpired;
+    private Boolean isExpired;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -33,7 +32,7 @@ public class Card {
 
     }
 
-    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate/*, boolean isExpired*/) {
+    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -41,22 +40,16 @@ public class Card {
         this.cvv = cvv;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
-        //this.isExpired = isExpired;
+        this.isExpired = false;
     }
 
     //getters
     public Long getId() {
         return id;
     }
-
-//    public Boolean isExpired() {
-//        if (LocalDateTime.now().isAfter(this.thruDate)){
-//            return isExpired = true;
-//        }
-//        else {
-//            return isExpired = false;
-//        }
-//    }
+    public Boolean isExpired() {
+       return (LocalDateTime.now().plusDays(2)).isAfter(this.thruDate);
+    }
     public String getCardHolder() {
         return cardHolder;
     }
@@ -91,9 +84,9 @@ public class Card {
         this.cardHolder = cardHolder;
     }
 
-//    public void setExpired(Boolean expired) {
-//            this.isExpired = expired;
-//    }
+    public void setExpired(Boolean expired) {
+            this.isExpired = expired;
+    }
 
     public void setType(CardType type) {
         this.type = type;

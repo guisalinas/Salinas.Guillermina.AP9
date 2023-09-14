@@ -1,10 +1,8 @@
-package com.homebankingAP.homebankingAP.controllers;
-
+package com.homebankingAP.homebankingAP.Controllers;
 import com.homebankingAP.homebankingAP.Services.CardService;
 import com.homebankingAP.homebankingAP.Services.ClientService;
 import com.homebankingAP.homebankingAP.dtos.CardDTO;
 import com.homebankingAP.homebankingAP.models.*;
-import com.homebankingAP.homebankingAP.repositories.CardRepository;
 import com.homebankingAP.homebankingAP.utils.UtilsCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,9 @@ public class CardController {
     private CardService _cardService;
 
     @PostMapping("/clients/current/cards")
-    public ResponseEntity<Object> createCard(Authentication authentication, CardColor cardColor, CardType cardType){
+    public ResponseEntity<Object> createCard(Authentication authentication,
+                                             @RequestParam CardColor cardColor,
+                                             @RequestParam CardType cardType){
 
         if (authentication != null){
 
@@ -66,7 +66,7 @@ public class CardController {
             String  cvv = UtilsCard.generateCvv(_cardService);
             LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
             LocalDateTime fromDate = LocalDateTime.now();
-            //boolean isExpired = false;
+
             Card card = new Card(cardHolder, cardType, cardColor, number, cvv, thruDate, fromDate);
             client.addCard(card);
             _cardService.saveCard(card);

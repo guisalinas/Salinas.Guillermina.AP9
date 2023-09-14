@@ -49,4 +49,26 @@ public class CardUtilsTest {
         _cardService.deleteCard(card);
         assertThat(_cardService.getCardById(card.getId()), is(nullValue()));
     }
+
+    @Test
+    public void isNotExpiredCard(){
+        Client client = new Client("Ann2", "Smith", "Ann89@Smith.com","myPwd");
+        _clientService.saveClient(client);
+        Card card =  new Card(client.toString(), CardType.DEBIT, CardColor.GOLD,"0934-9388-5874", "756", LocalDateTime.now().plusYears(5), LocalDateTime.now());
+        _cardService.saveCard(card);
+
+        assertThat(card.isExpired(), is(false));
+    }
+
+    @Test
+    public void isExpiredCard(){
+        Client client = new Client("Sam", "Smith", "Sam12@Smith.com","myPwd");
+        _clientService.saveClient(client);
+        Card card =  new Card(client.toString(), CardType.DEBIT, CardColor.GOLD,"0934-9388-5874", "756", LocalDateTime.now().minusYears(5), LocalDateTime.now());
+        _cardService.saveCard(card);
+
+        assertThat(card.isExpired(), is(true));
+    }
+
+
 }
