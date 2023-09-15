@@ -1,4 +1,4 @@
-FROM gradle:2.7.7.jdk11-alpine
+FROM gradle:2.7.7-jdk11-alpine
 
 COPY . .
 
