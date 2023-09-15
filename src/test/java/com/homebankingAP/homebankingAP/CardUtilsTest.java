@@ -70,5 +70,4 @@ public class CardUtilsTest {
         assertThat(card.isExpired(), is(true));
     }
 
-
 }
